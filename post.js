@@ -7,6 +7,7 @@ async function getPost(id) {
 
 async function getComments(id){
     let comPost = await fetch(`https://gorest.co.in/public/v2/posts/${id}/comments`)
+    return comPost.json()
 }
 
 function searchPost() {
@@ -14,8 +15,18 @@ function searchPost() {
     return postId.get('post')
 }
 
-function watchComments(){
+function watchComments(arr){
+    let title = document.createElement('h1')
+    title.textContent = 'Comments'
+    let comments = document.createElement('div')
+    comments.className = 'comments'
+    con.appendChild(title)
+    con.appendChild(comments)
+    for (let i of arr){
+        let com = document.createElement('div')
+        com.className = 'comment'
 
+    }
 }
 
 function watchPost(obj){
@@ -30,7 +41,9 @@ function watchPost(obj){
 async function main(){
     let postId = searchPost()
     let post = await getPost(postId)
+    let comments = await getComments(postId)
     watchPost(post)
+    watchComments(comments)
 }
 
 document.addEventListener('DOMContentLoaded', async ()=>{
